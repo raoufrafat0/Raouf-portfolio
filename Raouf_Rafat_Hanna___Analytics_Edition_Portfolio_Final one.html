@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raouf Rafat Hanna — Data Analyst Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+  /* ============================================
+     DESIGN TOKENS
+  ============================================ */
+  :root {
+    --bg: #F7F7F5;
+    --panel: #FFFFFF;
+    --panel-2: #EFEFEC;
+    --ink: #14161A;
+    --muted: #5B6169;
+    --line: rgba(20, 22, 26, 0.14);
+    --line-soft: rgba(20, 22, 26, 0.08);
+
+    --teal: #1F7A6C;
+    --amber: #C98A2C;
+    --coral: #B85C3E;
+    --violet: #4F55A0;
+
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --max-w: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; }
+  ::selection { background: var(--teal); color: var(--bg); }
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+  
+
+
+
+  /* ============================================
+     STICKY MINI NAV
+  ============================================ */
+  .mini-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(247, 247, 245, .88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-100%);
+    transition: transform .35s ease;
+  }
+  .mini-nav.show { transform: translateY(0); }
+  .mini-nav-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mini-nav-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .mini-nav a.cta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .05em;
+    text-decoration: none;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: background .2s ease, color .2s ease;
+  }
+  .mini-nav a.cta:hover { background: var(--teal); color: var(--bg); }
+
+
+
+
+  /* ============================================
+     HERO
+  ============================================ */
+  header.hero {
+    position: relative;
+    padding: 130px 0 70px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise .8s ease forwards .1s;
+  }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+
+  .dot-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent 75%);
+    pointer-events: none;
+  }
+
+  .hero-top {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 50px;
+    align-items: center;
+    padding-bottom: 54px;
+  }
+
+  .name-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 16px;
+  }
+  .avatar-lg {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 3px solid var(--panel);
+    box-shadow: 0 0 0 1px var(--line), 0 10px 24px rgba(20, 22, 26, .12);
+  }
+  .avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-copy h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+  }
+  .hero-role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--teal);
+    max-width: 480px;
+    margin: 0 0 20px;
+  }
+  .hero-bio {
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0 0 26px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+  .skill-tags span {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: var(--muted);
+    background: var(--panel);
+  }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--teal);
+    background: var(--teal);
+    color: var(--bg);
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .chip svg { width: 15px; height: 15px; }
+  .chip:hover { transform: translateY(-1px); background: #185F54; }
+  .chip.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .chip.ghost:hover { border-color: var(--teal); color: var(--teal); background: transparent; }
+
+  /* ---- avatar + toolkit donut chart panel ---- */
+  .hero-panel {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px;
+  }
+  .hero-panel-head {
+    margin-bottom: 20px;
+  }
+  .hero-panel-head .who { font-family: var(--font-display); font-weight: 600; font-size: 15px; }
+  .hero-panel-head .role { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .donut-row { display: flex; align-items: center; gap: 22px; }
+  .donut-wrap {
+    position: relative;
+    flex-shrink: 0;
+    filter: drop-shadow(0 6px 14px rgba(31, 122, 108, .18));
+    transition: transform .3s ease;
+  }
+  .donut-wrap:hover { transform: scale(1.04); }
+  .donut-seg { stroke-linecap: round; }
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .donut-center b {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .donut-center span {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .donut-legend { display: flex; flex-direction: column; gap: 9px; font-family: var(--font-mono); font-size: 12px; }
+  .donut-legend li { list-style: none; display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .donut-legend b { color: var(--ink); font-weight: 600; }
+  .swatch { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+  .panel-caption {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line-soft);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: .04em;
+  }
+
+  /* ---- KPI strip ---- */
+  .kpi-strip {
+    position: relative;
+    width:calc(100% + 570px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .kpi {
+    padding: 26px 24px;
+    border-right: 1px solid var(--line);
+  }
+  .kpi:last-child { border-right: none; }
+  .kpi-num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(26px, 3vw, 36px);
+    color: var(--teal);
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+  }
+  .kpi-num .unit { font-size: 16px; color: var(--teal); }
+  .kpi-label {
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  /* ============================================
+     "SELECTED WORK" INTRO
+  ============================================ */
+  .section-intro { padding: 64px 0 10px; }
+  .section-intro h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 40px;
+    margin: 14px 0 14px;
+    letter-spacing: -.01em;
+  }
+  .section-intro p { max-width: 620px; color: var(--muted); font-size: 16px; }
+
+
+
+  /* ============================================
+     DASHBOARD CARDS
+  ============================================ */
+  .work { padding: 30px 0 100px; }
+  .dashboard-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px 30px 34px;
+    margin-bottom: 30px;
+  }
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .project-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 2.6vw, 26px);
+    margin: 8px 0 10px;
+    letter-spacing: -.01em;
+  }
+  .project-desc { max-width: 600px; color: var(--muted); font-size: 15px; margin: 0; }
+  .project-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .05em;
+    color: var(--amber);
+    border: 1px solid rgba(201, 138, 44, .35);
+    background: rgba(201, 138, 44, .08);
+    padding: 6px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  .shot {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .shot.in-view { opacity: 1; transform: translateY(0); }
+
+  .shot-frame {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel-2);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shot-frame img.dashboard-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  .shot-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+  }
+  .shot-label b { font-family: var(--font-body); font-weight: 600; color: var(--ink); font-size: 12.5px; }
+
+  .shot-caption {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .shot-caption .highlight { color: var(--teal); }
+
+  .placeholder-note { margin-top: 18px; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+
+
+
+
+
+  /* ============================================
+     FOOTER GRID LINES 
+  ============================================ */
+
+  .footer-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(247, 247, 245, .08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(247, 247, 245, .08) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: linear-gradient(to top, black, transparent 92%);
+    mask-image: linear-gradient(to top, black, transparent 92%);
+    pointer-events: none;
+  }
+
+  footer {
+    position: relative;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 80px 0 30px;
+    overflow: hidden;
+  }
+  .footer-inner { position: relative; }
+  footer .eyebrow { color: var(--teal); }
+  footer .eyebrow::before { background: var(--teal); }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(247, 247, 245, .18);
+  }
+  .footer-top h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 3.4vw, 34px);
+    max-width: 480px;
+    margin: 10px 0 10px;
+    line-height: 1.15;
+    color: var(--bg);
+  }
+  .footer-top p { color: rgba(247, 247, 245, .6); max-width: 400px; margin: 0; font-size: 15px; }
+  .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+  .footer-contact a {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid transparent;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .footer-contact a:hover { border-color: var(--teal); color: var(--teal); }
+  .footer-contact svg { width: 14px; height: 14px; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .footer-bottom span { font-family: var(--font-mono); font-size: 11px; color: rgba(247, 247, 245, .45); }
+
+
+
+  /* ============================================
+     MOBILE
+  ============================================ */
+  @media (max-width: 820px) {
+    .hero-top { grid-template-columns: 1fr; }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .kpi:nth-child(2) { border-right: none; }
+    .kpi:nth-child(3), .kpi:nth-child(4) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 20px; }
+    .shot-grid { grid-template-columns: 1fr; }
+    .kpi-strip { grid-template-columns: 1fr; }
+    .kpi { border-right: none; border-top: 1px solid var(--line); }
+    .kpi:first-child { border-top: none; }
+    .avatar-lg { width: 80px; height: 80px; }
+    .hero-copy h1 { white-space: normal; font-size: clamp(24px, 7vw, 34px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    header.hero { opacity: 1; transform: none; }
+    .shot { opacity: 1; transform: none; }
+  }
+
+
+
+
+
+</style>
+</head>
+<body>
+
+  <nav class="mini-nav" id="miniNav">
+    <div class="mini-nav-inner">
+      <span class="mini-nav-name">Raouf Rafat Hanna</span>
+      <a class="cta" href="https://www.linkedin.com/in/raouf-rafat-3596941b4">LinkedIn</a>
+    </div>
+  </nav>
+
+  <!-- ============ HEADER / HERO ============ -->
+  <header class="hero">
+    <div class="dot-grid"></div>
+    <div class="wrap">
+
+      <div class="hero-top">
+        <div class="hero-copy">
+          <div class="name-row">
+            <div class="avatar-lg"><img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\1710584277333.JPG" ></div>
+            <h1>Raouf Rafat Hanna</h1>
+          </div>
+          <p class="hero-role">Transforming raw data into actionable insights by cleaning, modeling, and visualizing it through interactive dashboards that empower data-driven decision-making.</p>
+          <p class="hero-bio">Building end-to-end analytics solutions — from data preparation and modeling to interactive dashboards — that transform complex data into actionable insights, helping organizations identify opportunities, measure performance, and make strategic decisions with confidence.</p>
+
+          <div class="skill-tags">
+            <span>Data Cleaning &amp; Structuring</span><span>Excel</span><span>Power Query</span><span>DAX/M Language </span><span>Power BI</span><span>Data Modeling</span><span>SQL</span>
+          </div>
+
+          <div class="contact-row">
+            <a class="chip" href="tel:+201154265382">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"></path></svg>
+              +20 115 426 5382
+            </a>
+
+
+            <a class="chip ghost" href="mailto:raoufrafat0@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+              raoufrafat0@gmail.com
+            </a>
+
+
+            <a class="chip ghost" href="https://www.linkedin.com/in/raouf-rafat-3596941b4" >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+
+
+
+        <!-- toolkit donut chart panel -->
+        <div class="hero-panel">
+          <div class="hero-panel-head">
+            <div class="who">Toolkit mix</div>
+
+          <div class="donut-row">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 140 135" width="160" height="160" >
+                <circle  fill="none" ></circle>
+
+                <circle class="donut-seg" data-share="34" cx="70" cy="70" r="56" fill="none" stroke="var(--teal)" stroke-width="16"  transform="rotate(-120 70 70)"></circle>
+                <circle class="donut-seg" data-share="27" cx="70" cy="70" r="56" fill="none" stroke="var(--amber)" stroke-width="16"  transform="rotate(-115 70 70)"></circle>
+                <circle class="donut-seg" data-share="23" cx="70" cy="70" r="56" fill="none" stroke="var(--violet)" stroke-width="16"  transform="rotate(235 70 70)"></circle>
+                <circle class="donut-seg" data-share="16" cx="70" cy="70" r="56" fill="none" stroke="var(--coral)" stroke-width="16"  transform="rotate(-125 70 70)"></circle>
+
+              </svg>
+              <div class="donut-center"><b>5</b><span>Tools</span></div>
+            </div>
+            <ul class="donut-legend">
+              <li><span class="swatch" style="background:var(--teal)"></span> Power BI <b>40%</b></li>
+              <li><span class="swatch" style="background:var(--amber)"></span> Excel/PowerQuery <b>30%</b></li>
+              <li><span class="swatch" style="background:var(--violet)"></span>DAX/Data Modeling<b>20%</b></li>
+              <li><span class="swatch" style="background:var(--coral)"></span> SQL <b>10%</b></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- KPI strip: counters animate up once the page loads -->
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-num"><span class="counter" data-target="10">0</span></div>
+          <div class="kpi-label">Dashboards Created</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-num"><span class="counter" data-target="2">0</span></div>
+          <div class="kpi-label">Projects & Work-arounds</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-num"><span class="counter" data-target="9">0</span><span class="unit">+</span></div>
+          <div class="kpi-label">Report pages designed</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-num"><span class="counter" data-target="100">0</span><span class="unit">%</span></div>
+          <div class="kpi-label">Dashboards built end-to-end</div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============ "SELECTED WORK" INTRO ============ -->
+  <section class="section-intro">
+    <div class="wrap">
+      <h2>Dashboards, up close</h2>
+      <p>Each dashboard below started as a scattered, inconsistent dataset and ended as something someone opens every day to make a decision. Every page of a dashboard is shown below its title, with a short note on what that specific screen covers.</p>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARDS ============ -->
+
+  <section class="work">
+    <div class="wrap">
+
+      <!-- ============ Another section ============ -->
+
+
+      <div class="dashboard-card">
+        <div class="project-head">
+          <div>
+            <h3 class="project-title">Human Resource Analytics Dashboard</h3>
+            <p class="project-desc">This dashboard delivers a complete overview of workforce performance by department, highlighting hiring trends over time, gender diversity, active employee counts, years since last promotion, and salary distribution across job roles.</p>
+          </div>
+          <span class="project-badge">3 SCREENS</span>
+        </div>
+
+        <div class="shot-grid">
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\Screenshot 2026-07-13 141449.png" class="dashboard-img"   >
+            </div>
+            <div class="shot-label"><b>Main Overview Page</b><span>PAGE 01</span></div>
+            <p class="shot-caption">Gaining a comprehensive view of CO. workforce with a department-level insights,  <span style="color:#EC8E5A;"> tracking workforce in each department, their diversity, number of active employees, hiring trends over time, years since last promotions,</span> and <span style="color:#EC8E5A;">salary for each job role</span>. Supporting HR teams identifying talent gaps, evaluating pay equity, optimizing workforce allocation, monitoring hiring effectiveness, measuring promotion opportunities, improving employee retention, supporting succession planning, and making strategic workforce planning decisions.</p>
+          </div>
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\Screenshot 2026-07-16 054133.png" class="dashboard-img">
+            </div>
+            <div class="shot-label"><b>Demographic Breakdown Page</b><span>PAGE 02</span></div>
+            <p class="shot-caption">Exploring workforce demographics through interactive location-based insights. <span style="color:#EC8E5A;">Discovering the top three states driving our workforce by monitoring employee count, active employees, and attrition rates</span> to assess workforce growth and retention. <span style="color:#EC8E5A;">Interactive maps reveal where talent is concentrated</span>, enabling smarter location-based hiring and resource allocation, while <span style="color:#EC8E5A;">commuting patterns and travel-to-work insights</span> support workplace planning. <span style="color:#EC8E5A;">Marital status distribution</span> provides a deeper understanding of workforce demographics, helping HR teams design more informed employee engagement and benefits strategies.</p>
+          </div>
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\Screenshot 2026-07-16 190421.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>About Employees Page</b><span>PAGE 03</span></div>
+            <p class="shot-caption">Gain a comprehensive overview of workforce performance through key employee metrics and demographic insights. Exploring <span style="color:#EC8E5A;">average salary, active employees, trainings held, age distribution, and most hiring state</span>. Analyzing <span style="color:#EC8E5A;">salary trends by years of service</span> to support compensation and retention strategies, while <span style="color:#EC8E5A;">education, gender, and marital status</span> insights help identify talent opportunities and strengthen workforce planning. With an interactive side menu to facilitate navigating between dashboard pages, enabling HR teams to make data-driven decisions that improve employee development, recruitment, and long-term organizational growth.</p>
+          </div>
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\Screenshot 2026-07-13 143718.png" class="dashboard-img" alt="Simple Model Mapping">
+            </div>
+            <div class="shot-label"><b>Simple Model Mapping</b><span>PAGE 04</span></div>
+            <p class="shot-caption">The data model follows a star schema, with the Employee table acting as the central fact table connected to multiple dimension tables through one-to-many relationships. These relationships enable consistent filtering and accurate calculations.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Another section ============ -->
+
+
+      <div class="dashboard-card">
+        <div class="project-head">
+          <div>
+            <h3 class="project-title">Curious What I Build Behind the Scenes ..?</h3>
+            <p class="project-desc">These dashboards were developed as part of my professional work, covering Financial analysis, Portfolio management, Capacity building , Staff analysis , Strategic planning and KPI tracking, and Executive reporting.  <span style="color:#00B359"> To protect confidential business information, the original data has been replaced with dummy data while preserving the dashboards design, functionality, Insights and analytical value </span> .</p>
+          </div>
+          <span class="project-badge">7 SCREENS</span>
+        </div>
+
+
+
+        <div class="shot-grid">
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\1.jpeg" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Project No.1 "Financial Dashboard"</b></div>
+            <p class="shot-caption"><span style="color:#00B359"> This dashboard has been recreated using chicken restaurant-related data to preserve the original design while protecting confidential business information. </span> The dashboard focused on financial budgeting and portfolio performance, providing a consolidated view of assets and liabilities, portfolio composition, performance trends, and actual versus target comparisons to support strategic decision-making.   </p>
+          </div>
+
+
+      <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\1-mapping.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Mapping for Project No.1</b></div>
+            <p class="shot-caption">
+              <span style="color:#00B359"> This dashboard has been recreated using chicken restaurant-related data to preserve the original design while protecting confidential business information. </span> This mapping is for Project No. 1 and it look the same as the original one used for the financial budgeting and portfolio performance Dashboard.   </p>
+          </div>
+           <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\2.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Department No.1</b></div>
+            <p class="shot-caption"> <span style="color:#00B359"> This dashboard has been recreated using restaurant-related data to preserve the original design while protecting confidential business information.</span> The dashboard developed to monitor a department's projects, initiatives, and KPIs. It enabled stakeholders to track progress against quarterly and annual targets, compare actual performance with both current year planned goals and previous-year results, Monitoring below the static key milestones throughout each year. By bringing together project status, KPI performance, and objectives in a single view, and much more..</p>
+          </div>
+
+           <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\3.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Department No.2</b></div>
+            <p class="shot-caption"><span style="color:#00B359"> This dashboard has been recreated using restaurant-related data to preserve the original design while protecting confidential business information. </span> The dashboard developed to monitor a department's projects, initiatives, and KPIs. It enabled stakeholders to track progress against quarterly and annual targets, compare actual performance with both current year planned goals and previous-year results, Monitoring below the static key milestones throughout each year. By bringing together project status, KPI performance, and objectives in a single view, and much more..</p>
+          </div>
+
+        <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\4.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Department No.3</b></div>
+            <p class="shot-caption"><span style="color:#00B359"> This dashboard has been recreated using restaurant-related data to preserve the original design while protecting confidential business information. </span> The dashboard developed to monitor a department's projects, initiatives, and KPIs. It enabled stakeholders to track progress against quarterly and annual targets, compare actual performance with both current year planned goals and previous-year results, Monitoring below the static key milestones throughout each year. By bringing together project status, KPI performance, and objectives in a single view, and much more..</p>
+          </div>
+
+         <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\2-mapping.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Mapping for Department Dashboard</b></div>
+            <p class="shot-caption"><span style="color:#00B359"> This dashboard has been recreated using chicken restaurant-related data to preserve the original design while protecting confidential business information. </span> This mapping is for Departments Dashboard and it look as the one used for the Departments KPI performance Dashboard.   </p>
+          </div>
+
+
+
+            <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\5.jpeg" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Project No.2 "Certification Analysis Dashboard"</b></div>
+            <p class="shot-caption">
+              <span style="color:#00B359"> This dashboard has been recreated using restaurant-related data to preserve the original design while protecting confidential business information. </span> The dashboard focused on Tracking workforce capacity through three dedicated organizational segments, each breaking down employee headcount across managerial levels alongside certification counts and completion rates. Compare workforce readiness across business areas, monitor certification progress at every leadership level, and measure performance against targeted staffing, certification rates, and capacity-building goals. These insights help leaders identify capability gaps, prioritize training initiatives, align workforce development with strategic objectives, and ensure organizational readiness for future growth.  </p>
+          </div>
+
+        <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\6.jpeg" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Project No.2 "Capacity Analysis Dashboard"</b></div>
+            <p class="shot-caption">
+              <span style="color:#00B359"> This dashboard has been recreated using restaurant-related data to preserve the original design while protecting confidential business information. </span> The dashboard focused on Tracking workforce capacity through three dedicated organizational segments, each measuring employee performance based on Revenue value, Number of customers , concluding the capacity per single employee helping in evaluate capacity shortages and surpluses. Monitor staffing distribution across managerial levels conducting a ratio of employess to thier higher level managers, and compare performance against operational targets. These insights help leaders optimize workforce utilization, balance customer portfolios, improve branch efficiency, allocate resources effectively, and support strategic capacity planning for sustainable business growth.  </p>
+          </div>
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\7.jpeg" class="dashboard-img">
+            </div>
+            <div class="shot-label"><b>Project No.2 "Regional Capacity Tracking Dashboard"</b></div>
+            <p class="shot-caption">
+              <span style="color:#00B359"> This dashboard has been recreated using restaurant-related data to preserve the original design while protecting confidential business information. </span> The dashboard focused on Monitoring training and certification progress, evaluate staffing readiness by territory and outlet, and identify opportunities to strengthen operational performance. By combining workforce planning and crew development into a single view, the dashboard empowers managers to optimize scheduling, improve service quality, maintain operational standards, and support sustainable business growth.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Another section ============ -->
+
+
+      <div class="dashboard-card">
+        <div class="project-head">
+          <div>
+            <h3 class="project-title">The Map Project </h3>
+            <p class="project-desc">Developing a custom Egypt GeoJSON map from scratch, creating a workaround for Power BI's lack of offline Egypt map support and enabling interactive geographic visualizations without internet access or external map services. </p>
+          </div>
+          <span class="project-badge">2 SCREENS</span>
+        </div>
+
+        <div class="shot-grid">
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\Map1.png" class="dashboard-img">
+            </div>
+            <div class="shot-label"><b>The Map</b></div>
+            <p class="shot-caption">Engineered a custom Egypt GeoJSON map as a technical workaround to enable interactive geographic reporting in Power BI within a restricted offline environment. Designed and built the map from scratch by defining governorate polygons, coordinate geometry in JSON/GeoJSON, then consolidated all governorates into 11 regions preserving accuracy. Optimized and simplified the geometry using Mapshaper and other geospatial processing tools, enabling performant, fully interactive map visualizations without internet access, external APIs, or built-in map services.</p>
+          </div>
+
+          <div class="shot">
+            <div class="shot-frame">
+              <img src="C:\Users\raouf\OneDrive\Desktop\Portfolio\dimensions 1.png" class="dashboard-img" >
+            </div>
+            <div class="shot-label"><b>Map Json File </b></div>
+            <p class="shot-caption"> Snapshot of the custom GeoJSON file defining Egypt's governorate boundaries, spatial coordinates, and regions used to render the interactive Power BI map.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!--
+        TO ADD ANOTHER DASHBOARD: copy everything from one opening
+        dashboard-card tag above to its matching closing tag, and
+        paste the copy just above this comment (not below it).
+      -->
+
+    </div>
+  </section>
+
+  <!-- ============ The footerr ============ -->
+  <footer>
+    <div class="footer-grid-lines"></div>
+    <div class="wrap footer-inner">
+
+      <div class="footer-top">
+        <div>
+          <p class="eyebrow">Let's talk data</p>
+          <h3>Have a dataset that needs a dashboard?</h3>
+          <p>I'm always open to new projects — reporting builds, data cleanup, or a full dashboard from scratch.</p>
+        </div>
+
+
+        <div class="footer-contact">
+          <a href="tel:+201154265382">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"></path></svg>
+            +20 115 426 5382
+          </a>
+          <a href="mailto:raoufrafat0@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+            raoufrafat0@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/raouf-rafat-3596941b4" >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn
+          </a>
+
+
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span> Raouf Rafat Hanna — Data Analyst Portfolio</span>      </div>
+
+    </div>
+  </footer>
+
+    <!--for the mini navigation hide and show part -->
+
+  <script>
+
+
+    // for the mini navigation hide and show part
+
+    var miniNav = document.getElementById('miniNav');
+    var hero = document.querySelector('header.hero');
+
+    function handleHeroVisibility(entries) {
+      if (entries[0].isIntersecting) {
+        miniNav.classList.remove('show');
+      } else {
+        miniNav.classList.add('show');
+      }
+    }
+    new IntersectionObserver(handleHeroVisibility, { threshold: 0 }).observe(hero);
+
+
+
+
+      //    scrolls onto the screen fade part
+
+    var shots = document.querySelectorAll('.shot');
+    function handleShotVisibility(entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          shotObserver.unobserve(entry.target);
+        }
+      });
+    }
+    var shotObserver = new IntersectionObserver(handleShotVisibility, { threshold: 0.15 });
+    shots.forEach(function (shot) { shotObserver.observe(shot); });
+
+
+
+
+    // for the dont chat calculation and geometrics 
+
+    var circumference = 2 * Math.PI * 56; // radius = 56
+    var offsetSoFar = 0;
+    document.querySelectorAll('.donut-seg').forEach(function (seg) {
+      var share = parseFloat(seg.getAttribute('data-share')) / 100;
+      var arcLength = circumference * share;
+      seg.style.strokeDasharray = arcLength + ' ' + circumference;
+      seg.style.strokeDashoffset = -offsetSoFar;
+      offsetSoFar += arcLength;
+    });
+
+
+
+
+    // 4) Count the KPI numbers up from 0 to their target once scrolling down
+
+    function animateCounter(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      var duration = 1200; // ms
+      var start = null;
+
+      function step(timestamp) {
+        if (start === null) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        el.textContent = Math.floor(progress * target);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    var counters = document.querySelectorAll('.counter');
+    function handleCounterVisibility(entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }
+    var counterObserver = new IntersectionObserver(handleCounterVisibility, { threshold: 0.4 });
+    counters.forEach(function (counter) { counterObserver.observe(counter); });
+  </script>
+
+</body>
+</html>
